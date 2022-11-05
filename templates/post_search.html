@@ -1,0 +1,44 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% load custom_tags %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block content %}
+   <h1>Поиск публикации</h1>
+   <form action="" method="get">
+       {{ filterset.form.as_p }}
+       <input type="submit" value="Найти" />
+   </form>
+
+   <h3>{% current_time '%b %d %Y' %}</h3>
+   <hr>
+
+   {% if post_search %}
+        <table>
+            <tr>
+                <td>Заголовок</td>
+                <td/> Категория </td>
+                <td>Текст</td>
+                <td>Дата</td>
+            </tr>
+            {% for post in post_search %}
+            <tr>
+                <td>{{post.title | cenzura}}</td>
+                <td/> {{post.categoria}} </td>
+                <td>{{post.content|truncatewords:15 | cenzura}}</td>
+                <td>{{post.post_time}}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+   {% else %}
+       <h2>Публикации не найдены!</h2>
+
+   {% endif %}
+{% endblock content %}
